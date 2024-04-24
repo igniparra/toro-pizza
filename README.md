@@ -31,6 +31,8 @@ To set up the application on your local environment, follow these steps:
 ### 3. Set Up the Database
 Create a new database and update `.env` with the database information.
 
+If using the provided MySQL backup, rename .env.example to .env
+
 Run migrations and seed the database:
 - php artisan migrate --seed
 
