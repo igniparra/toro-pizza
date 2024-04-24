@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'cost'];
 
     public function pizzas()
     {
-        return $this->belongsToMany(Pizza::class)->withPivot('order');
+        return $this->belongsToMany(Pizza::class, 'pizza_ingredient')->withPivot('order');
     }
 }
-

@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pizza extends Model
 {
+    use HasFactory;
+
+    protected $fillable = ['name'];
+    
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class)->withPivot('order');
+        return $this->belongsToMany(Ingredient::class, 'pizza_ingredient')->withPivot('order');
     }
 
-    public function getSellingPrice()
+    public function getSellingPriceAttribute()
     {
         $totalCost = $this->ingredients->sum('cost');
-        return $totalCost * 1.5;  //Selling price includes 50% margin.
+        return $totalCost * 1.5;  // Selling price includes 50% margin.
     }
 }
-

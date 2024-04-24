@@ -7,6 +7,8 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/pizza.js',
+                'resources/js/toasts.js'
             ],
             refresh: true,
         }),
