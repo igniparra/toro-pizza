@@ -24,18 +24,19 @@ git clone https://github.com/igniparra/toro-pizza.git
 cd toro-pizza
 
 ### 2. Install Dependencies
-composer install
-npm install
-npm run build
+- composer install
+- npm install
+- npm run build
 
 ### 3. Set Up the Database
 Create a new database and update `.env` with the database information.
 
 Run migrations and seed the database:
-php artisan migrate --seed
+- php artisan migrate --seed
 
 ### 4. Serve the Application
-php artisan serve
+- php artisan serve
+
 This will start a development server at http://localhost:8000
 
 ## Usage
