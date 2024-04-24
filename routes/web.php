@@ -33,6 +33,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/pizzas/{pizza}/edit', [PizzaController::class, 'edit'])->name('pizzas.edit');
         Route::patch('/pizzas/{pizza}', [PizzaController::class, 'update'])->name('pizzas.update');
         Route::delete('/pizzas/{pizza}', [PizzaController::class, 'destroy'])->name('pizzas.destroy');
+
+        //Order Pizzas
+        Route::post('/ingredients/{ingredient}/move-up', [IngredientController::class, 'moveUp'])->name('ingredients.moveUp');
+        Route::post('/ingredients/{ingredient}/move-down', [IngredientController::class, 'moveDown'])->name('ingredients.moveDown');
     });
 });
 

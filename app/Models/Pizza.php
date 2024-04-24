@@ -10,10 +10,10 @@ class Pizza extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
-    
+
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class, 'pizza_ingredient')->withPivot('order');
+        return $this->belongsToMany(Ingredient::class, 'pizza_ingredient');
     }
 
     public function getSellingPriceAttribute()

@@ -8,7 +8,7 @@ class IngredientController extends Controller
 {
     public function index()
     {
-        $ingredients = Ingredient::all();
+        $ingredients = Ingredient::orderBy('order','asc')->get();
         return view('ingredients', compact('ingredients'));
     }
 
@@ -24,11 +24,24 @@ class IngredientController extends Controller
             'cost' => 'required|numeric|min:0.01'
         ]);
 
-        session()->flash('Success','Ingredient added successfully');
-        
-        Ingredient::create($request->all());
-        return redirect()->route('ingredients')->with('success', 'Ingredient added successfully.');
+        //Manually loading the ingredient to ensure order is last.
+        try {
+            $highestOrder = Ingredient::max('order');
+            $order = $highestOrder + 1;
+
+            $ingredient = new Ingredient();
+            $ingredient->name = $request->name;
+            $ingredient->cost = $request->cost;
+            $ingredient->order = $order;
+            $ingredient->save();
+
+            return redirect()->route('ingredients')->with('success', 'Ingredient added successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Failed to add ingredient: ' . $e->getMessage()]);
+        }
     }
+
+
 
     public function edit(Ingredient $ingredient)
     {
@@ -55,6 +68,49 @@ class IngredientController extends Controller
 
         $ingredient->delete();
         return redirect()->route('ingredients')->with('success', 'Ingredient deleted successfully.');
+    }
+
+    //Order Ingredients up and down
+    public function moveUp(Request $request, $id)
+    {
+        $ingredient = Ingredient::findOrFail($id);
+
+        // Find the previous ingredient
+        $previousIngredient = Ingredient::where('order',  $ingredient->order-1)->first();
+
+        if ($previousIngredient) {
+            // Swap the order values
+            $tempOrder = $ingredient->order;
+            $ingredient->order = $previousIngredient->order;
+            $previousIngredient->order = $tempOrder;
+
+            // Save changes
+            $ingredient->save();
+            $previousIngredient->save();
+        }
+
+        return redirect()->back();
+    }
+
+    public function moveDown(Request $request, $id)
+    {
+        $ingredient = Ingredient::findOrFail($id);
+
+        // Find the next ingredient
+        $nextIngredient = Ingredient::where('order', $ingredient->order+1)->first();
+
+        if ($nextIngredient) {
+            // Swap the order values
+            $tempOrder = $ingredient->order;
+            $ingredient->order = $nextIngredient->order;
+            $nextIngredient->order = $tempOrder;
+
+            // Save changes
+            $ingredient->save();
+            $nextIngredient->save();
+        }
+
+        return redirect()->back();
     }
 
 }

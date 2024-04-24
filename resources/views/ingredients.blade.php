@@ -24,17 +24,37 @@
                                 <th scope="col">Name</th>
                                 <th scope="col">Cost</th>
                                 <th scope="col">Actions</th>
+                                <th scope="col">Order</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($ingredients as $ingredient)
                                 <tr>
-                                    <th scope="row">{{ $ingredient->id }}</th>
+                                    <th scope="row">{{ $ingredient->order }}</th>
                                     <td>{{ $ingredient->name }}</td>
                                     <td>${{ number_format($ingredient->cost, 2) }}</td>
-                                    <td>
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editIngredientModal-{{ $ingredient->id }}"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</button>
-                                        <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ $ingredient->id }})"><i class="fa-solid fa-trash-can mr-2"></i>Delete</button>
+                                    <td >
+                                        <button class="btn btn-primary btn-sm mx-2" data-bs-toggle="modal" data-bs-target="#editIngredientModal-{{ $ingredient->id }}"><i class="fa-solid fa-pen-to-square mr-2"></i>Edit</button>
+                                        <button class="btn btn-danger btn-sm mx-2" onclick="confirmDelete({{ $ingredient->id }})"><i class="fa-solid fa-trash-can mr-2"></i>Delete</button>
+                                    </td>
+                                    <td class='d-flex'>
+                                        @if ($loop->first)
+                                            <button class="btn btn-secondary btn-sm disabled mx-2"><i class="fa-solid fa-arrow-up mr-2"></i>Up</button>
+                                        @else
+                                            <form action="{{ route('ingredients.moveUp', $ingredient->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary btn-sm mx-2"><i class="fa-solid fa-arrow-up mr-2"></i>Up</button>
+                                            </form>
+                                        @endif
+
+                                        @if ($loop->last)
+                                            <button class="btn btn-secondary btn-sm disabled mx-2"><i class="fa-solid fa-arrow-down mr-2"></i>Down</button>
+                                        @else
+                                            <form action="{{ route('ingredients.moveDown', $ingredient->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary btn-sm mx-2"><i class="fa-solid fa-arrow-down mr-2"></i>Down</button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 <!-- Edit Ingredient Modal -->

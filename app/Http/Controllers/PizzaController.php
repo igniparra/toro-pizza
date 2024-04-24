@@ -13,7 +13,7 @@ class PizzaController extends Controller
     public function index()
     {
         $pizzas = Pizza::with('ingredients')->get();
-        $ingredients = Ingredient::all();
+        $ingredients = Ingredient::orderBy('order','asc')->get();
         return view('pizzas', compact('pizzas','ingredients'));
     }
 
