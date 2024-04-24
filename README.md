@@ -20,8 +20,8 @@ This application allows customers to customize pre-made pizzas with various ingr
 To set up the application on your local environment, follow these steps:
 
 ### 1. Clone the Repository
-git clone https://github.com/igniparra/toro-pizza.git
-cd toro-pizza
+- git clone https://github.com/igniparra/toro-pizza.git
+- cd toro-pizza
 
 ### 2. Install Dependencies
 - composer install
