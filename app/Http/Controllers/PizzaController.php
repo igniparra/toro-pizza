@@ -17,12 +17,6 @@ class PizzaController extends Controller
         return view('pizzas', compact('pizzas','ingredients'));
     }
 
-    // Show the form for creating a new pizza
-    public function create()
-    {
-        return view('pizzas.create');
-    }
-
     // Store a newly created pizza in storage
     public function store(Request $request)
     {
@@ -52,13 +46,6 @@ class PizzaController extends Controller
             // and return to the previous page with an error
             return redirect()->route('pizzas')->with('error', 'Error creating pizza: ' . $e->getMessage());
         }
-    }
-
-
-    // Show the form for editing the specified pizza
-    public function edit(Pizza $pizza)
-    {
-        return view('pizzas.edit', compact('pizza'));
     }
 
     // Update the specified pizza in storage

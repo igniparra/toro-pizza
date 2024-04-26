@@ -11,12 +11,6 @@ class IngredientController extends Controller
         $ingredients = Ingredient::orderBy('order','asc')->get();
         return view('ingredients', compact('ingredients'));
     }
-
-    public function create()
-    {
-        return view('ingredients.create');
-    }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -34,14 +28,6 @@ class IngredientController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Failed to add ingredient: ' . $e->getMessage()]);
         }
-    }
-
-
-
-
-    public function edit(Ingredient $ingredient)
-    {
-        return view('ingredients.edit', compact('ingredient'));
     }
 
     public function update(Request $request, Ingredient $ingredient)

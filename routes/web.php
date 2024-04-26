@@ -7,6 +7,13 @@ use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    // Check if the user is authenticated
+    if (Auth::check()) {
+        // Redirect authenticated users to the 'customer' route
+        return redirect()->route('customer');
+    }
+
+    // If the user is not authenticated, return the login view
     return view('auth.login');
 });
 
