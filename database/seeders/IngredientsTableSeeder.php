@@ -9,7 +9,7 @@ class IngredientsTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('ingredients')->insert([
+        $ingredients = [
             ['name' => 'Tomato Sauce', 'cost' => 0.50],
             ['name' => 'Mozzarella Cheese', 'cost' => 0.75],
             ['name' => 'Pepperoni', 'cost' => 1.00],
@@ -23,6 +23,14 @@ class IngredientsTableSeeder extends Seeder
             ['name' => 'Spinach', 'cost' => 0.65],
             ['name' => 'Pineapple', 'cost' => 0.85],
             ['name' => 'Ham', 'cost' => 0.90]
-        ]);
+        ];
+
+        $currentOrder = 1;  // Starting order number
+
+        foreach ($ingredients as &$ingredient) {
+            $ingredient['order'] = $currentOrder++;  // Assign current order and increment
+        }
+
+        DB::table('ingredients')->insert($ingredients);
     }
 }

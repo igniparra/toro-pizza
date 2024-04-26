@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->decimal('cost', 8, 2); //Two decimals seems standard.
+            $table->decimal('cost', 8, 2); // Two decimals seems standard.
+            $table->unsignedBigInteger('order');
             $table->timestamps();
         });
     }
